@@ -1,0 +1,41 @@
+recipe:
+    thousands: '{nbDays} jours'
+    planet-revolutions: '{count, ordinal} révolution de {object} '
+    planet-revolution: '{count, selectordinal, one {#ère} other {#ème}} révolution de {object}'
+    now: 'Maintenant'
+    averageAgeFirstChildren: "Age moyen des femmes à la naissance du 1er enfant dans l'OCDE en 2022"
+    sleep-time: '{
+        nbYears,
+        plural,
+        =1 {1 année passée } other {# années passées }
+    } à dormir'
+    planet:
+        mercury: Mercure
+        venus: Venus
+        earth: Terre
+        mars: Mars
+        jupiter: Jupiter
+        saturn: Saturne
+        uranus: Uranus
+        neptune: Neptune
+        pluto: Pluton
+events:
+    title: 'Evenements basés sur une date de naissance le {birthdate, date}'
+    what: 'Quoi'
+    when: 'Quand'
+    daysFromNow: 'Différence en jours'
+    age: 'Âge'
+    age_calc: '
+    {
+        nbYears,
+        plural,
+        =0 {} =1 {1 an } other {# ans }
+    }
+    {
+        nbYears,
+        plural,
+        =0 {{nbMonths, plural, =0 {} other {# mois }}}
+        =1 {{nbMonths, plural, =0 {} other {# mois }}}
+        =2 {{nbMonths, plural, =0 {} other {# mois }}}
+        other {}
+    }'
