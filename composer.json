@@ -4,7 +4,6 @@
     "license": "GPL-3.0-or-later",
     "description": "Calculate several special dates relative to a birthdate (or any date)",
     "keywords": ["birthday", "calendar", "periodic"],
-    "version": "0.1.0",
     "authors": [
         {
             "name": "Alexis Urien",
