@@ -7,7 +7,7 @@ recipe:
     sleep-time: '{
         nbYears,
         plural,
-        =1 {1 année passée } other {# années passées }
+        =1 {1 année passée} other {# années passées}
     } à dormir'
     planet:
         mercury: Mercure
@@ -25,17 +25,15 @@ events:
     when: 'Quand'
     daysFromNow: 'Différence en jours'
     age: 'Âge'
-    age_calc: '
-    {
+    age_calc: '{
         nbYears,
         plural,
-        =0 {} =1 {1 an } other {# ans }
-    }
-    {
+        =0 {} =1 {1 an} other {# ans}
+    }{
         nbYears,
         plural,
-        =0 {{nbMonths, plural, =0 {} other {# mois }}}
-        =1 {{nbMonths, plural, =0 {} other {# mois }}}
-        =2 {{nbMonths, plural, =0 {} other {# mois }}}
+        =0 {{nbMonths, plural, =0 {} other {# mois}}}
+        =1 {{nbMonths, plural, =0 {} other { # mois}}}
+        =2 {{nbMonths, plural, =0 {} other { # mois}}}
         other {}
     }'

@@ -6,7 +6,7 @@ recipe:
     sleep-time: '{
         nbYears,
         plural,
-        =1 {1 year } other {# years }
+        =1 {1 year} other {# years}
     } spent sleeping'
     planet:
         mercury: Mercury
@@ -24,17 +24,15 @@ events:
     when: 'When'
     daysFromNow: 'Days from now'
     age: 'Age'
-    age_calc: '
-    {
+    age_calc: '{
         nbYears,
         plural,
-        =0 {} =1 {1 year } other {# years }
-    }
-    {
+        =0 {} =1 {1 year} other {# years}
+    }{
         nbYears,
         plural,
-        =0 {{nbMonths, plural, =0 {} =1 {1 month} other {# months }}}
-        =1 {{nbMonths, plural, =0 {} =1 {1 month} other {# months }}}
-        =2 {{nbMonths, plural, =0 {} =1 {1 month} other {# months }}}
+        =0 {{nbMonths, plural, =0 {} =1 {1 month} other {# months}}}
+        =1 {{nbMonths, plural, =0 {} =1 { 1 month} other { # months}}}
+        =2 {{nbMonths, plural, =0 {} =1 { 1 month} other { # months}}}
         other {}
     }'
