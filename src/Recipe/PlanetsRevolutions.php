@@ -52,7 +52,7 @@ class PlanetsRevolutions extends Recipe
                     continue;
                 }
                 $event = new Event(
-                    (clone $basedOn)->add(new \DateInterval('P' . (int) ( $iRevolutions * $frequency) . 'D'))
+                    (clone $basedOn)->add(new \DateInterval('P' . (int) ($iRevolutions * $frequency) . 'D'))
                 );
                 $event->setSummary($this->getSummary($iRevolutions, $object));
                 $event->setSourceRecipe(self::class);

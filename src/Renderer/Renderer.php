@@ -21,7 +21,7 @@ abstract class Renderer implements RendererInterface
         $finder = new Finder();
         $finder->files()->in(dirname(__DIR__, 2) . '/translations')->name('*.yaml');
         foreach ($finder as $file) {
-            $locale = str_replace('messages+intl-icu.', '' , $file->getFilenameWithoutExtension());
+            $locale = str_replace('messages+intl-icu.', '', $file->getFilenameWithoutExtension());
             $this->translator->addResource(
                 'icu',
                 $file->getRealPath(),

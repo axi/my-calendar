@@ -11,7 +11,8 @@ class Event
     private \DateTimeImmutable $dateTime;
     private string $sourceRecipe;
 
-    public function __construct(\DateTimeImmutable $dateTime) {
+    public function __construct(\DateTimeImmutable $dateTime)
+    {
         $this->dateTime = $dateTime;
     }
 
