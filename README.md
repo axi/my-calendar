@@ -7,7 +7,7 @@ It's been know to be the best tool to wish a happy 15000th day to people (no it'
 You can install this package by using [Composer](http://getcomposer.org), running the following command:
 
 ```sh
-composer require axi/my-calendar
+composer require axi/mycalendar
 ```
 
 ## Usage
