@@ -1,5 +1,6 @@
 recipe:
     thousands: '{nbDays} jours'
+    minutes: '{nbMinutes, number} minutes'
     planet-revolutions: '{count, ordinal} révolution de {object} '
     planet-revolution: '{count, selectordinal, one {#ère} other {#ème}} révolution de {object}'
     now: 'Maintenant'

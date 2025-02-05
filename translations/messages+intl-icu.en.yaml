@@ -1,5 +1,6 @@
 recipe:
     thousands: '{nbDays} days'
+    minutes: '{nbMinutes, number} minutes'
     planet-revolution: '{count, ordinal} {object} revolution'
     now: 'Now'
     averageAgeFirstChildren: Women's mean age at 1st childbirth in 2022 in the OECD
