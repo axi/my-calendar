@@ -16,20 +16,24 @@ use Throwable;
 class CalendarService
 {
     /**
-     * @var Recipe[] $recipes
+     * @var Recipe[] $recipes FQDN name indexed recipes
      */
-    private array $recipes = [];
+    private ?array $recipes = null;
 
     /**
-     * @var RendererInterface[] $recipes
+     * @var string[] $onlyRecipes List of FQDN class names to use (only those)
      */
-    private array $renderers = [];
+    private array $onlyRecipes = [];
 
-    public function __construct()
-    {
-        $this->loadRecipes();
-        $this->loadRenderers();
-    }
+    /**
+     * @var string[] $exceptRecipes List of FQDN class names to not use
+     */
+    private array $exceptRecipes = [];
+
+    /**
+     * @var RendererInterface[] $renderers FQDN name indexed renderers
+     */
+    private ?array $renderers = null;
 
     public function getEventsFromDate(
         DateTimeInterface $dateTime,
@@ -41,7 +45,7 @@ class CalendarService
         // Check rendering first
         $found = false;
         $renderer = null;
-        foreach ($this->renderers as $renderer) {
+        foreach ($this->getRenderers() as $renderer) {
             if ($renderer->getRendererFormat() === $renderingFormat) {
                 $found = true;
                 break;
@@ -53,7 +57,7 @@ class CalendarService
 
         // Get events
         $events = [];
-        foreach ($this->recipes as $recipe) {
+        foreach ($this->getRecipes() as $recipe) {
             if (in_array($renderingFormat, $recipe->getRenderingsAllowed(), true)) {
                 $events[] = $recipe->getEvents($dateTime);
             }
@@ -70,7 +74,77 @@ class CalendarService
     }
 
     /**
-     * Load all classes implementing RecipeInterface
+     * If not empty, will restrict the generation to those only recipes
+     * @param string[] $onlyRecipes FQDN recipe class names
+     */
+    public function setOnlyRecipes(array $onlyRecipes): void
+    {
+        $this->onlyRecipes = $onlyRecipes;
+    }
+
+    /**
+     * If not empty, will disable the generation of those recipes
+     * @param string[] $exceptRecipes FQDN recipe class names
+     */
+    public function setExceptRecipes(array $exceptRecipes): void
+    {
+        $this->exceptRecipes = $exceptRecipes;
+    }
+
+    /**
+     * Allow to inject a custom list of recipes.
+     *
+     * @param Recipe[] $recipes FQDN recipe class name indexed recipes
+     */
+    public function setRecipes(array $recipes): void
+    {
+        $this->recipes = $recipes;
+    }
+
+    private function getRecipes(): array
+    {
+        // Load recipes if not already loaded
+        // If used with symfony bundle, recipes have already been injected
+        if (null === $this->recipes) {
+            $this->loadRecipes();
+        }
+
+        if (!empty($this->onlyRecipes)) {
+            $recipes = [];
+            foreach ($this->onlyRecipes as $onlyRecipe) {
+                if (array_key_exists($onlyRecipe, $this->recipes)) {
+                    $recipes[] = $this->recipes[$onlyRecipe];
+                }
+            }
+
+            return $recipes;
+        }
+
+        if (!empty($this->exceptRecipes)) {
+            $recipes = $this->recipes;
+            foreach ($this->exceptRecipes as $exceptRecipe) {
+                if (array_key_exists($exceptRecipe, $recipes)) {
+                    unset($recipes[$exceptRecipe]);
+                }
+            }
+
+            return $recipes;
+        }
+
+        return $this->recipes;
+    }
+
+    private function getRenderers(): ?array
+    {
+        if (null === $this->renderers) {
+            $this->loadRenderers();
+        }
+
+        return $this->renderers;
+    }
+
+    /**
+     * Load all classes implementing RecipeInterface within the vendor
      */
     private function loadRecipes(): void
     {
@@ -101,7 +175,7 @@ class CalendarService
                 try {
                     $class = new $className();
                     if (in_array($implementingInterface, class_implements($class), true)) {
-                        $classes[] = $class;
+                        $classes[$className] = $class;
                     }
                 } catch (Throwable) {
                     continue;

@@ -31,4 +31,9 @@ abstract class Recipe implements RecipeInterface
     {
         return self::ALLOWED_FORMATS;
     }
+
+    public function getSource(): string
+    {
+        return self::class;
+    }
 }

@@ -13,4 +13,6 @@ interface RecipeInterface
     public function getSummary(...$vars): TranslatableMessage;
 
     public function getSource(): string;
+
+    public function getRenderingsAllowed(): array;
 }
