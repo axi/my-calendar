@@ -4,7 +4,6 @@ namespace Axi\MyCalendar\Service;
 
 use Axi\MyCalendar\Event;
 use Axi\MyCalendar\Exception\NoRendererFoundException;
-use Axi\MyCalendar\Recipe\Recipe;
 use Axi\MyCalendar\Recipe\RecipeInterface;
 use Axi\MyCalendar\Renderer\RendererInterface;
 use DateTimeImmutable;
@@ -16,7 +15,7 @@ use Throwable;
 class CalendarService
 {
     /**
-     * @var Recipe[] $recipes FQDN name indexed recipes
+     * @var RecipeInterface[] $recipes FQDN name indexed recipes
      */
     private ?array $recipes = null;
 
@@ -94,10 +93,15 @@ class CalendarService
     /**
      * Allow to inject a custom list of recipes.
      *
-     * @param Recipe[] $recipes FQDN recipe class name indexed recipes
+     * @param RecipeInterface[] $recipes FQDN recipe class name indexed recipes
      */
     public function setRecipes(array $recipes): void
     {
+        foreach ($recipes as $recipe) {
+            if (!in_array(RecipeInterface::class, class_implements($recipe), true)) {
+                throw new \RuntimeException('Recipe ' . $recipe::class . ' must implements ' . RecipeInterface::class);
+            }
+        }
         $this->recipes = $recipes;
     }
 
