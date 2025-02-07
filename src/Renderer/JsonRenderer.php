@@ -5,12 +5,9 @@ namespace Axi\MyCalendar\Renderer;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
-class Json extends Renderer
+class JsonRenderer extends AbstractRenderer
 {
-    public function getRendererFormat(): string
-    {
-        return 'json';
-    }
+    public const FORMAT = 'json';
 
     public function render(array $events, \DateTimeInterface $baseDateTime): array|Response|string
     {

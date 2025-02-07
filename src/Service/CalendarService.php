@@ -5,6 +5,7 @@ namespace Axi\MyCalendar\Service;
 use Axi\MyCalendar\Event;
 use Axi\MyCalendar\Exception\NoRendererFoundException;
 use Axi\MyCalendar\Recipe\RecipeInterface;
+use Axi\MyCalendar\Renderer\NoneRenderer;
 use Axi\MyCalendar\Renderer\RendererInterface;
 use DateTimeImmutable;
 use DateTimeInterface;
@@ -36,7 +37,7 @@ class CalendarService
 
     public function getEventsFromDate(
         DateTimeInterface $dateTime,
-        string $renderingFormat = 'none',
+        string $renderingFormat = NoneRenderer::FORMAT,
         string $locale = 'en'
     ): array|Response|string {
         $dateTime = DateTimeImmutable::createFromInterface($dateTime);

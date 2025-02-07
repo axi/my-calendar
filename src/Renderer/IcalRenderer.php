@@ -14,12 +14,9 @@ use Eluceo\iCal\Domain\ValueObject\Uri;
 use Eluceo\iCal\Presentation\Factory\CalendarFactory;
 use Symfony\Component\HttpFoundation\Response;
 
-class Ical extends Renderer
+class IcalRenderer extends AbstractRenderer
 {
-    public function getRendererFormat(): string
-    {
-        return 'ical';
-    }
+    public const FORMAT = 'ical';
 
     /**
      * @param MyCalendarEvent[]  $events

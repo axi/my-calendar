@@ -7,8 +7,10 @@ use Symfony\Component\Translation\Loader\YamlFileLoader;
 use Symfony\Component\Translation\MessageCatalogueInterface;
 use Symfony\Component\Translation\Translator;
 
-abstract class Renderer implements RendererInterface
+abstract class AbstractRenderer implements RendererInterface
 {
+    public const FORMAT = 'no-set';
+
     private ?Translator $translator = null;
 
     public function setLocale(string $locale): void
@@ -23,6 +25,11 @@ abstract class Renderer implements RendererInterface
         }
 
         return $this->translator;
+    }
+
+    public function getRendererFormat(): string
+    {
+        return $this::FORMAT;
     }
 
     public function setTranslator(Translator $translator): void

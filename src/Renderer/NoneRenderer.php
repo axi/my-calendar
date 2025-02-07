@@ -6,12 +6,9 @@ use Axi\MyCalendar\Event;
 use Symfony\Component\HttpFoundation\Response;
 
 /** No rendering applied,  */
-class None extends Renderer
+class NoneRenderer extends AbstractRenderer
 {
-    public function getRendererFormat(): string
-    {
-        return 'none';
-    }
+    public const FORMAT = 'none';
 
     /**
      * @param Event[] $events
