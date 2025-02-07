@@ -18,9 +18,9 @@ class Json extends Renderer
         foreach ($events as $event) {
             $return[] = [
                 'date' => $event->getDateTime()->format('Y-m-d'),
-                'summary' => $event->getSummary()->trans($this->translator),
+                'summary' => $event->getSummary()->trans($this->getTranslator()),
                 'daysFromNow' => $event->getRelativeDaysFromNow(),
-                'ageAt' => $event->getAgeAt($baseDateTime)->trans($this->translator),
+                'ageAt' => $event->getAgeAt($baseDateTime)->trans($this->getTranslator()),
             ];
         }
 

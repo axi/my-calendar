@@ -9,11 +9,29 @@ use Symfony\Component\Translation\Translator;
 
 abstract class Renderer implements RendererInterface
 {
-    protected Translator $translator;
+    private ?Translator $translator = null;
 
-    public function __construct()
+    public function setLocale(string $locale): void
     {
-        // Init translator
+        $this->getTranslator()->setLocale($locale);
+    }
+
+    public function getTranslator(): Translator
+    {
+        if (!isset($this->translator)) {
+            $this->initTranslator();
+        }
+
+        return $this->translator;
+    }
+
+    public function setTranslator(Translator $translator): void
+    {
+        $this->translator = $translator;
+    }
+
+    private function initTranslator(): void
+    {
         $this->translator = new Translator(class_exists(\Locale::class) ? \Locale::getDefault() : 'en');
         $this->translator->addLoader('icu', new YamlFileLoader());
 
@@ -32,10 +50,5 @@ abstract class Renderer implements RendererInterface
 
         // Set fallback
         $this->translator->setFallbackLocales(['en']);
-    }
-
-    public function setLocale(string $locale): void
-    {
-        $this->translator->setLocale($locale);
     }
 }

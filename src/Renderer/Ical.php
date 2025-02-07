@@ -34,7 +34,7 @@ class Ical extends Renderer
         foreach ($events as $event) {
             $uuid = md5(self::class . $event->getSummary() . $event->getDateTime()->format("dmY"));
             $ev = (new Event(new UniqueIdentifier($uuid)))
-                ->setSummary($event->getSummary()->trans($this->translator))
+                ->setSummary($event->getSummary()->trans($this->getTranslator()))
                 ->setOccurrence(new SingleDay(new Date($event->getDateTime())));
 
             if (!empty($event->getDescription())) {
