@@ -105,12 +105,27 @@ class CalendarService
         $this->recipes = $recipes;
     }
 
+    /**
+     * Allow to inject a custom list of renderers.
+     *
+     * @param RendererInterface[] $renderers FQDN recipe class name indexed renderers
+     */
+    public function setRenderers(array $renderers): void
+    {
+        foreach ($renderers as $renderer) {
+            if (!in_array(RendererInterface::class, class_implements($renderer), true)) {
+                throw new \RuntimeException('Renderer ' . $renderer::class . ' must implements ' . RendererInterface::class);
+            }
+        }
+        $this->renderers = $renderers;
+    }
+
     private function getRecipes(): array
     {
         // Load recipes if not already loaded
         // If used with symfony bundle, recipes have already been injected
         if (null === $this->recipes) {
-            $this->loadRecipes();
+            $this->loadLocalRecipes();
         }
 
         if (!empty($this->onlyRecipes)) {
@@ -141,7 +156,7 @@ class CalendarService
     private function getRenderers(): ?array
     {
         if (null === $this->renderers) {
-            $this->loadRenderers();
+            $this->loadLocalRenderers();
         }
 
         return $this->renderers;
@@ -150,7 +165,7 @@ class CalendarService
     /**
      * Load all classes implementing RecipeInterface within the vendor
      */
-    private function loadRecipes(): void
+    private function loadLocalRecipes(): void
     {
         $this->recipes = $this->getClasses(
             dirname(__DIR__) . '/Recipe',
@@ -159,7 +174,7 @@ class CalendarService
         );
     }
 
-    private function loadRenderers(): void
+    private function loadLocalRenderers(): void
     {
         $this->renderers = $this->getClasses(
             dirname(__DIR__) . '/Renderer',
