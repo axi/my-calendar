@@ -8,7 +8,7 @@ use Symfony\Component\Translation\TranslatableMessage;
 /**
  * list the dates where planets (other than earth) have made one or several revolutions
  */
-class PlanetsRevolutions extends Recipe
+class PlanetsRevolutionsRecipe extends AbstractRecipe
 {
     /**
      * @var array|float[]

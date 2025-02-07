@@ -5,7 +5,7 @@ namespace Axi\MyCalendar\Recipe;
 use Axi\MyCalendar\Event;
 use Symfony\Component\Translation\TranslatableMessage;
 
-class MillionMinutes extends Recipe
+class MillionMinutesRecipe extends AbstractRecipe
 {
     private const ONE_MILLION = 10000000;
 

@@ -4,7 +4,7 @@ namespace Axi\MyCalendar\Recipe;
 
 use Axi\MyCalendar\Event;
 
-abstract class DaysFromBirthDateRecipe extends Recipe
+abstract class DaysFromBirthDateRecipe extends AbstractRecipe
 {
     protected int $daysFromBirth;
 

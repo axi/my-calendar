@@ -8,7 +8,7 @@ use Symfony\Component\Translation\TranslatableMessage;
 /**
  * Fancy dates where people reach multiple of thousand days
  */
-class ThousandsDays extends Recipe
+class ThousandsDaysRecipe extends AbstractRecipe
 {
     public function getEvents(\DateTimeImmutable $basedOn): array
     {

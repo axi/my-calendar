@@ -14,5 +14,7 @@ interface RecipeInterface
 
     public function getSource(): string;
 
-    public function getRenderingsAllowed(): array;
+    public function getAllowedRenderings(): array;
+
+    public function setAllowedRenderings(array $allowedRenderings): void;
 }

@@ -8,7 +8,7 @@ use Symfony\Component\Translation\TranslatableMessage;
 /**
  * Estimated average sleep total time in years
  */
-class SleepTime extends Recipe
+class SleepTimeRecipe extends AbstractRecipe
 {
     public function getEvents(\DateTimeImmutable $basedOn): array
     {

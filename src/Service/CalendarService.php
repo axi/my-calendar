@@ -5,12 +5,15 @@ namespace Axi\MyCalendar\Service;
 use Axi\MyCalendar\Event;
 use Axi\MyCalendar\Exception\NoRendererFoundException;
 use Axi\MyCalendar\Recipe\RecipeInterface;
+use Axi\MyCalendar\Renderer\IcalRenderer;
+use Axi\MyCalendar\Renderer\JsonRenderer;
 use Axi\MyCalendar\Renderer\NoneRenderer;
 use Axi\MyCalendar\Renderer\RendererInterface;
 use DateTimeImmutable;
 use DateTimeInterface;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Yaml\Yaml;
 use Throwable;
 
 class CalendarService
@@ -34,31 +37,26 @@ class CalendarService
      * @var RendererInterface[] $renderers FQDN name indexed renderers
      */
     private ?array $renderers = null;
+    private bool $configuredRecipesRenderers = false;
+    private ?array $renderingConfig = null;
 
-    public function getEventsFromDate(
-        DateTimeInterface $dateTime,
-        string $renderingFormat = NoneRenderer::FORMAT,
+    public function getEvents(
+        DateTimeInterface $basedOnDate,
+        string $renderingClass = NoneRenderer::class,
         string $locale = 'en'
     ): array|Response|string {
-        $dateTime = DateTimeImmutable::createFromInterface($dateTime);
+        $dateTime = DateTimeImmutable::createFromInterface($basedOnDate);
 
         // Check rendering first
-        $found = false;
-        $renderer = null;
-        foreach ($this->getRenderers() as $renderer) {
-            if ($renderer->getRendererFormat() === $renderingFormat) {
-                $found = true;
-                break;
-            }
+        if (!array_key_exists($renderingClass, $this->getRenderers())) {
+            throw new NoRendererFoundException($renderingClass);
         }
-        if (!$found) {
-            throw new NoRendererFoundException($renderingFormat);
-        }
+        $renderer = $this->getRenderers()[$renderingClass];
 
         // Get events
         $events = [];
         foreach ($this->getRecipes() as $recipe) {
-            if (in_array($renderingFormat, $recipe->getRenderingsAllowed(), true)) {
+            if (in_array($renderingClass, $recipe->getAllowedRenderings(), true)) {
                 $events[] = $recipe->getEvents($dateTime);
             }
         }
@@ -70,6 +68,7 @@ class CalendarService
         });
 
         $renderer->setLocale($locale);
+
         return $renderer->render($events, $dateTime);
     }
 
@@ -128,6 +127,7 @@ class CalendarService
         if (null === $this->recipes) {
             $this->loadLocalRecipes();
         }
+        $this->configureRecipesRenderers();
 
         if (!empty($this->onlyRecipes)) {
             $recipes = [];
@@ -204,5 +204,52 @@ class CalendarService
         }
 
         return $classes;
+    }
+
+    private function configureRecipesRenderers(): void
+    {
+        if (true === $this->configuredRecipesRenderers) {
+            return;
+        }
+        $config = $this->getRecipeRenderingConfig();
+
+        foreach ($this->recipes as $recipeClass => $recipe) {
+            if (isset($config['only'][$recipeClass])) {
+                $recipe->setAllowedRenderings($config['only'][$recipeClass]);
+            } elseif (isset($config['exclude'][$recipeClass])) {
+                $classes = [];
+                foreach ($this->getAllRendererClasses() as $rendererClass) {
+                    if (!in_array($rendererClass, $config['exclude'][$recipeClass], true)) {
+                        $classes[] = $rendererClass;
+                    }
+                }
+                $recipe->setAllowedRenderings($classes);
+            } else {
+                $recipe->setAllowedRenderings($this->getAllRendererClasses());
+            }
+        }
+
+        $this->configuredRecipesRenderers = true;
+    }
+
+    private function getAllRendererClasses(): array
+    {
+        return array_keys($this->renderers);
+    }
+
+    private function getRecipeRenderingConfig(): array
+    {
+        if (!isset($this->renderingConfig)) {
+            // If not loaded or provided, use local configuration
+            $config = Yaml::parseFile(dirname(__DIR__, 2) . '/config/recipe_rendering.yaml');
+            $this->renderingConfig = $config["axi_my_calendar"]["recipe_rendering"];
+        }
+
+        return $this->renderingConfig;
+    }
+
+    public function setRenderingConfig(?array $renderingConfig): void
+    {
+        $this->renderingConfig = $renderingConfig;
     }
 }

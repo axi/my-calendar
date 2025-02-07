@@ -27,11 +27,6 @@ abstract class AbstractRenderer implements RendererInterface
         return $this->translator;
     }
 
-    public function getRendererFormat(): string
-    {
-        return $this::FORMAT;
-    }
-
     public function setTranslator(Translator $translator): void
     {
         $this->translator = $translator;

@@ -7,7 +7,7 @@ use Symfony\Component\Translation\TranslatableMessage;
 /**
  * Women's mean age at 1st childbirth in 2022 in the OECD
  */
-class AverageAgeFirstChildren extends DaysFromBirthDateRecipe
+class AverageAgeFirstChildrenRecipe extends DaysFromBirthDateRecipe
 {
     public function __construct()
     {
@@ -21,7 +21,6 @@ class AverageAgeFirstChildren extends DaysFromBirthDateRecipe
             'recipe.averageAgeFirstChildren'
         );
     }
-
 
     public function getSource(): string
     {

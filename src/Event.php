@@ -2,7 +2,7 @@
 
 namespace Axi\MyCalendar;
 
-use Axi\MyCalendar\Recipe\Recipe;
+use Axi\MyCalendar\Recipe\AbstractRecipe;
 use Symfony\Component\Translation\TranslatableMessage;
 
 class Event
@@ -45,8 +45,8 @@ class Event
     public function getAgeAt(\DateTimeInterface $birthDate): TranslatableMessage
     {
         $days = ($birthDate->diff($this->dateTime))->days;
-        $nbYears = (int) ($days / Recipe::EARTH_DAYS_PER_YEAR);
-        $nbMonths = (int) (($days - ($nbYears * Recipe::EARTH_DAYS_PER_YEAR)) / 30);
+        $nbYears = (int) ($days / AbstractRecipe::EARTH_DAYS_PER_YEAR);
+        $nbMonths = (int) (($days - ($nbYears * AbstractRecipe::EARTH_DAYS_PER_YEAR)) / 30);
 
         return new TranslatableMessage('events.age_calc', ['nbYears' => $nbYears, 'nbMonths' => $nbMonths]);
     }

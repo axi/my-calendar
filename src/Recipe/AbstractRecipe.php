@@ -2,7 +2,7 @@
 
 namespace Axi\MyCalendar\Recipe;
 
-abstract class Recipe implements RecipeInterface
+abstract class AbstractRecipe implements RecipeInterface
 {
     private const MAX_YEAR_DEFAULT = 130;
 
@@ -11,12 +11,7 @@ abstract class Recipe implements RecipeInterface
      */
     protected int $maxYear = self::MAX_YEAR_DEFAULT;
 
-    public const ALLOWED_FORMATS = [
-        'html',
-        'ical',
-        'json',
-        'none'
-    ];
+    private ?array $allowedRenderings = null;
 
     // Sometimes, listing ALL the numbers makes no sense, but this suite of number does (for me at least)
     protected const ALLOWED_ITERATIONS = [1, 2, 3, 4, 5, 10, 15, 20, 25, 30, 40, 50, 100];
@@ -27,9 +22,18 @@ abstract class Recipe implements RecipeInterface
      * Some Recipe should not be use on specific renderings
      * @return string[]
      */
-    public function getRenderingsAllowed(): array
+    public function getAllowedRenderings(): array
     {
-        return self::ALLOWED_FORMATS;
+        if (!isset($this->allowedRenderings)) {
+            throw new \RuntimeException('Unconfigured allowed renderings');
+        }
+
+        return $this->allowedRenderings;
+    }
+
+    public function setAllowedRenderings(array $allowedRenderings): void
+    {
+        $this->allowedRenderings = $allowedRenderings;
     }
 
     public function getSource(): string

@@ -8,7 +8,7 @@ use Symfony\Component\Translation\TranslatableMessage;
 /**
  * Special recipe to dispaly the current day within the date list
  */
-class Now extends Recipe
+class NowRecipe extends AbstractRecipe
 {
     public function getEvents(\DateTimeImmutable $basedOn): array
     {
@@ -31,10 +31,5 @@ class Now extends Recipe
     public function getSource(): string
     {
         return '';
-    }
-
-    public function getRenderingsAllowed(): array
-    {
-        return ['html', 'none'];
     }
 }

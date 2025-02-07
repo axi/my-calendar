@@ -7,8 +7,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 interface RendererInterface
 {
-    public function getRendererFormat(): string;
-
     /**
      * @param Event[]            $events
      * @param \DateTimeInterface $baseDateTime
