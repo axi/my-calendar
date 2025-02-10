@@ -9,8 +9,6 @@ use Symfony\Component\Translation\Translator;
 
 abstract class AbstractRenderer implements RendererInterface
 {
-    public const FORMAT = 'no-set';
-
     private ?Translator $translator = null;
 
     public function setLocale(string $locale): void

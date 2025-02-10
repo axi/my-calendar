@@ -16,8 +16,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class IcalRenderer extends AbstractRenderer
 {
-    public const FORMAT = 'ical';
-
     /**
      * @param MyCalendarEvent[]  $events
      * @param \DateTimeInterface $baseDateTime

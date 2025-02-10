@@ -7,8 +7,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class JsonRenderer extends AbstractRenderer
 {
-    public const FORMAT = 'json';
-
     public function render(array $events, \DateTimeInterface $baseDateTime): array|Response|string
     {
         $return = [];

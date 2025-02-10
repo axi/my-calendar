@@ -8,8 +8,6 @@ use Symfony\Component\HttpFoundation\Response;
 /** No rendering applied,  */
 class NoneRenderer extends AbstractRenderer
 {
-    public const FORMAT = 'none';
-
     /**
      * @param Event[] $events
      * @return Event[] $events
