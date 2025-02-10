@@ -19,11 +19,19 @@
         "symfony/yaml": "^7.1"
     },
     "require-dev": {
-        "friendsofphp/php-cs-fixer": "^3"
+        "friendsofphp/php-cs-fixer": "^3",
+        "phpunit/phpunit": "^11.5",
+        "symfony/debug": "^4.4",
+        "eluceo/ical": "^2.14"
     },
     "autoload": {
         "psr-4": {
             "Axi\\MyCalendar\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Axi\\Tests\\": "tests/unit"
         }
     },
     "suggest": {
