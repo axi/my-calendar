@@ -2,7 +2,7 @@
 
 namespace Axi\MyCalendar\Exception;
 
-class NoRendererFoundException extends \RuntimeException
+class NoRendererFoundException extends AbstractRendererException
 {
     public function __construct(string $renderer)
     {

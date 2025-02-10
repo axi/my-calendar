@@ -3,11 +3,11 @@ axi_my_calendar:
     recipe_rendering:
         # Allows only the specified renderers
         only:
-#            Axi\MyCalendar\Recipe\Now:
+#            Axi\MyCalendar\Recipe\NowRecipe:
 #                - Axi\MyCalendar\Renderer\NoneRenderer
 
         # Allows all available renderers but the ones listed here
         exclude:
-            Axi\MyCalendar\Recipe\Now:
+            Axi\MyCalendar\Recipe\NowRecipe:
                 - Axi\MyCalendar\Renderer\JsonRenderer
                 - Axi\MyCalendar\Renderer\IcalRenderer

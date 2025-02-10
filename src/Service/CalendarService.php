@@ -3,10 +3,11 @@
 namespace Axi\MyCalendar\Service;
 
 use Axi\MyCalendar\Event;
+use Axi\MyCalendar\Exception\NoRecipeFoundException;
 use Axi\MyCalendar\Exception\NoRendererFoundException;
+use Axi\MyCalendar\Exception\NotARecipeException;
+use Axi\MyCalendar\Exception\NotARendererException;
 use Axi\MyCalendar\Recipe\RecipeInterface;
-use Axi\MyCalendar\Renderer\IcalRenderer;
-use Axi\MyCalendar\Renderer\JsonRenderer;
 use Axi\MyCalendar\Renderer\NoneRenderer;
 use Axi\MyCalendar\Renderer\RendererInterface;
 use DateTimeImmutable;
@@ -94,13 +95,12 @@ class CalendarService
      * Allow to inject a custom list of recipes.
      *
      * @param RecipeInterface[] $recipes FQDN recipe class name indexed recipes
+     * @throws \Axi\MyCalendar\Exception\AbstractRecipeException
      */
     public function setRecipes(array $recipes): void
     {
         foreach ($recipes as $recipe) {
-            if (!in_array(RecipeInterface::class, class_implements($recipe), true)) {
-                throw new \RuntimeException('Recipe ' . $recipe::class . ' must implements ' . RecipeInterface::class);
-            }
+            $this->checkRecipe($recipe);
         }
         $this->recipes = $recipes;
     }
@@ -109,15 +109,27 @@ class CalendarService
      * Allow to inject a custom list of renderers.
      *
      * @param RendererInterface[] $renderers FQDN recipe class name indexed renderers
+     * @throws \Axi\MyCalendar\Exception\AbstractRendererException
      */
     public function setRenderers(array $renderers): void
     {
         foreach ($renderers as $renderer) {
-            if (!in_array(RendererInterface::class, class_implements($renderer), true)) {
-                throw new \RuntimeException('Renderer ' . $renderer::class . ' must implements ' . RendererInterface::class);
-            }
+            $this->checkRenderer($renderer);
         }
         $this->renderers = $renderers;
+    }
+
+    public function setRenderingConfig(?array $renderingConfig): void
+    {
+        $config = [];
+        if (isset($renderingConfig['only'])) {
+            $config['only'] = $this->validateConfig($renderingConfig['only']);
+        }
+        if (isset($renderingConfig['exclude'])) {
+            $config['exclude'] = $this->validateConfig($renderingConfig['exclude']);
+        }
+
+        $this->renderingConfig = $config;
     }
 
     private function getRecipes(): array
@@ -125,7 +137,11 @@ class CalendarService
         // Load recipes if not already loaded
         // If used with symfony bundle, recipes have already been injected
         if (null === $this->recipes) {
-            $this->loadLocalRecipes();
+            $this->recipes = $this->getClasses(
+                dirname(__DIR__) . '/Recipe',
+                'Axi\\MyCalendar\\Recipe\\',
+                RecipeInterface::class
+            );
         }
         $this->configureRecipesRenderers();
 
@@ -157,31 +173,14 @@ class CalendarService
     private function getRenderers(): ?array
     {
         if (null === $this->renderers) {
-            $this->loadLocalRenderers();
+            $this->renderers = $this->getClasses(
+                dirname(__DIR__) . '/Renderer',
+                'Axi\\MyCalendar\\Renderer\\',
+                RendererInterface::class
+            );
         }
 
         return $this->renderers;
-    }
-
-    /**
-     * Load all classes implementing RecipeInterface within the vendor
-     */
-    private function loadLocalRecipes(): void
-    {
-        $this->recipes = $this->getClasses(
-            dirname(__DIR__) . '/Recipe',
-            'Axi\\MyCalendar\\Recipe\\',
-            RecipeInterface::class
-        );
-    }
-
-    private function loadLocalRenderers(): void
-    {
-        $this->renderers = $this->getClasses(
-            dirname(__DIR__) . '/Renderer',
-            'Axi\\MyCalendar\\Renderer\\',
-            RendererInterface::class
-        );
     }
 
     private function getClasses(string $path, string $namespace, string $implementingInterface): array
@@ -248,8 +247,55 @@ class CalendarService
         return $this->renderingConfig;
     }
 
-    public function setRenderingConfig(?array $renderingConfig): void
+    /** @throws \Axi\MyCalendar\Exception\AbstractRendererException */
+    private function checkRenderer($renderer): void
     {
-        $this->renderingConfig = $renderingConfig;
+        if (!is_object($renderer)) {
+            if (!class_exists($renderer)) {
+                throw new NoRendererFoundException($renderer);
+            }
+            $renderer = new $renderer();
+        }
+
+        if (!in_array(RendererInterface::class, class_implements($renderer), true)) {
+            throw new NotARendererException($renderer::class);
+        }
+    }
+
+    /** @throws \Axi\MyCalendar\Exception\AbstractRecipeException */
+    private function checkRecipe($recipe): void
+    {
+        if (!is_object($recipe)) {
+            if (!class_exists($recipe)) {
+                throw new NoRecipeFoundException($recipe);
+            }
+            $recipe = new $recipe();
+        }
+
+        if (!in_array(RecipeInterface::class, class_implements($recipe), true)) {
+            throw new NotARecipeException($recipe::class);
+        }
+    }
+
+    /**
+     * @param array $config Recipe classname indexed renderers
+     * @example  Axi\MyCalendar\Recipe\NowRecipe:
+     *                - Axi\MyCalendar\Renderer\JsonRenderer
+     *                - Axi\MyCalendar\Renderer\IcalRenderer
+     * @throws \Axi\MyCalendar\Exception\AbstractRendererException|\Axi\MyCalendar\Exception\AbstractRecipeException
+     */
+    private function validateConfig(array $config): array
+    {
+        $return = [];
+        foreach ($config as $recipeName => $rendererNames) {
+            $this->checkRecipe($recipeName);
+            $return[$recipeName] = [];
+            foreach ($rendererNames as $rendererName) {
+                $this->checkRenderer($rendererName);
+                $return[$recipeName][] = $rendererName;
+            }
+        }
+
+        return $return;
     }
 }
