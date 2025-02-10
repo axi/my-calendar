@@ -36,5 +36,9 @@
     },
     "suggest": {
         "eluceo/ical": "Required to use the Ical (ical) renderering format"
+    },
+    "scripts": {
+        "php-cs-fixer": "php vendor/bin/php-cs-fixer fix",
+        "phpunit": "php vendor/bin/phpunit --bootstrap=vendor/autoload.php tests/"
     }
 }
