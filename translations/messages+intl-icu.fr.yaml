@@ -20,6 +20,7 @@ recipe:
         uranus: Uranus
         neptune: Neptune
         pluto: Pluton
+    billionSeconds: '{nbBSeconds, number} {nbBSeconds, selectordinal, one {milliard} other {milliards}} de secondes'
 events:
     title: 'Evenements basés sur une date de naissance le {birthdate, date}'
     what: 'Quoi'
