@@ -1,1 +1,6 @@
-{}
+recipe:
+  now: Ahora
+  minutes: '{nbMinutes, number} minutos'
+  thousands: '{nbDays} dias'
+events:
+  what: Qué
