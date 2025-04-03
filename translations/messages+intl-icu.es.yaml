@@ -1,0 +1,16 @@
+recipe:
+  now: Ahora
+  minutes: '{nbMinutes, number} minutos'
+  thousands: '{nbDays} dias'
+  planet:
+    neptune: Neptuno
+    uranus: Urano
+    earth: Tierra
+    mars: Marte
+    jupiter: Júpiter
+    mercury: Mercurio
+    saturn: Saturno
+    venus: Venus
+events:
+  what: Qué
+  when: Cuando
