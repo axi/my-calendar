@@ -11,6 +11,15 @@ recipe:
     mercury: Mercurio
     saturn: Saturno
     venus: Venus
+    pluto: Plutón
+  planet-revolution: '{count, ordinal} {object} revolución'
+  billionSeconds: '{nbBSeconds, number} mil millones de segundos'
+  averageAgeFirstChildren: La media de la edad de las mujeres en el primer parto en
+    2022 en la Oficina de Desarrollo de la Primera Infancia
+  sleep-time: '{ nbYears, plural, =1 {1 year} otros {# years} } pasados durmiendo'
 events:
   what: Qué
   when: Cuando
+  daysFromNow: Días que faltan
+  age: Edad
+  title: Eventos basados en {birthdate, date} fecha de nacimiento
