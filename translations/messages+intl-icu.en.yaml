@@ -1,14 +1,17 @@
 recipe:
     thousands: '{nbDays} days'
+    thousandsName: 'Days count'
     minutes: '{nbMinutes, number} minutes'
     planet-revolution: '{count, ordinal} {object} revolution'
+    planet-revolutionsName: 'Revolutions count from planets'
     now: 'Now'
-    averageAgeFirstChildren: Women's mean age at 1st childbirth in 2022 in the OECD
+    averageAgeFirstChildren: Women's mean age at 1st childbirth in the OECD
     sleep-time: '{
         nbYears,
         plural,
         =1 {1 year} other {# years}
     } spent sleeping'
+    sleep-timeName: 'Estimated year count of sleeping time'
     planet:
         mercury: Mercury
         venus: Venus
@@ -20,6 +23,9 @@ recipe:
         neptune: Neptune
         pluto: Pluto
     billionSeconds: '{nbBSeconds, number} billion seconds'
+    billionSecondsName: 'Billion seconds'
+    daysFromBirthDateName: 'Days since a date'
+    millionMinutesName: 'Million minutes'
 events:
     title: 'Events based on {birthdate, date} birth date'
     what: 'What'

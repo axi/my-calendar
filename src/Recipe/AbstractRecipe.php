@@ -2,6 +2,8 @@
 
 namespace Axi\MyCalendar\Recipe;
 
+use Symfony\Component\Translation\TranslatableMessage;
+
 abstract class AbstractRecipe implements RecipeInterface
 {
     private const MAX_YEAR_DEFAULT = 130;
@@ -39,5 +41,10 @@ abstract class AbstractRecipe implements RecipeInterface
     public function getSource(): string
     {
         return self::class;
+    }
+
+    public function getName(): TranslatableMessage
+    {
+        return new TranslatableMessage($this::class);
     }
 }

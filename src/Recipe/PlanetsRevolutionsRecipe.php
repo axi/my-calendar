@@ -75,4 +75,11 @@ class PlanetsRevolutionsRecipe extends AbstractRecipe
     {
         return 'https://en.wikipedia.org/wiki/Orbital_period#Examples_of_sidereal_and_synodic_periods';
     }
+
+    public function getName(): TranslatableMessage
+    {
+        return new TranslatableMessage(
+            'recipe.planet-revolutionsName',
+        );
+    }
 }

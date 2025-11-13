@@ -40,6 +40,13 @@ class SleepTimeRecipe extends AbstractRecipe
         );
     }
 
+    public function getName(): TranslatableMessage
+    {
+        return new TranslatableMessage(
+            'recipe.sleep-timeName'
+        );
+    }
+
     public function getSource(): string
     {
         return 'https://douglas.research.mcgill.ca/fr/sommeil-et-enfant-donnees-scientifiques/';

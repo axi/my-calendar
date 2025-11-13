@@ -32,4 +32,11 @@ class NowRecipe extends AbstractRecipe
     {
         return '';
     }
+
+    public function getName(): TranslatableMessage
+    {
+        return new TranslatableMessage(
+            'recipe.now'
+        );
+    }
 }

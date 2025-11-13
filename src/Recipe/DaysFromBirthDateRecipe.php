@@ -3,6 +3,7 @@
 namespace Axi\MyCalendar\Recipe;
 
 use Axi\MyCalendar\Event;
+use Symfony\Component\Translation\TranslatableMessage;
 
 abstract class DaysFromBirthDateRecipe extends AbstractRecipe
 {
@@ -17,5 +18,10 @@ abstract class DaysFromBirthDateRecipe extends AbstractRecipe
         $event->setSourceRecipe(self::class);
 
         return [$event];
+    }
+
+    public function getName(): TranslatableMessage
+    {
+        return new TranslatableMessage('recipe.daysFromBirthDateName');
     }
 }

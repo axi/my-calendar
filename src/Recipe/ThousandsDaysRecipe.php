@@ -41,4 +41,9 @@ class ThousandsDaysRecipe extends AbstractRecipe
     {
         return 'simple maths';
     }
+
+    public function getName(): TranslatableMessage
+    {
+        return new TranslatableMessage('recipe.thousandsName');
+    }
 }

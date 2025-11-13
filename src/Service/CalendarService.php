@@ -132,7 +132,7 @@ class CalendarService
         $this->renderingConfig = $config;
     }
 
-    private function getRecipes(): array
+    public function getRecipes(): array
     {
         // Load recipes if not already loaded
         // If used with symfony bundle, recipes have already been injected

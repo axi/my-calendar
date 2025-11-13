@@ -22,6 +22,13 @@ class AverageAgeFirstChildrenRecipe extends DaysFromBirthDateRecipe
         );
     }
 
+    public function getName(): TranslatableMessage
+    {
+        return new TranslatableMessage(
+            'recipe.averageAgeFirstChildren'
+        );
+    }
+
     public function getSource(): string
     {
         return 'https://www.oecd.org/en/publications/society-at-a-glance-2024_918d8db3-en.html';

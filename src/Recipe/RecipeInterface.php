@@ -17,4 +17,6 @@ interface RecipeInterface
     public function getAllowedRenderings(): array;
 
     public function setAllowedRenderings(array $allowedRenderings): void;
+
+    public function getName(): TranslatableMessage;
 }

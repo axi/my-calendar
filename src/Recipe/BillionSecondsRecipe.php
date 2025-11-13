@@ -31,4 +31,9 @@ class BillionSecondsRecipe extends AbstractRecipe
     {
         return new TranslatableMessage('recipe.billionSeconds', ['nbBSeconds' => $vars[0]]);
     }
+
+    public function getName(): TranslatableMessage
+    {
+        return new TranslatableMessage('recipe.billionSecondsName');
+    }
 }
