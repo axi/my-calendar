@@ -1,47 +1,34 @@
 recipe:
-    thousands: '{nbDays} jours'
-    thousandsName: 'Nombre de jours depuis une date'
-    minutes: '{nbMinutes, number} minutes'
-    planet-revolutions: '{count, ordinal} révolution de {object} '
-    planet-revolution: '{count, selectordinal, one {#ère} other {#ème}} révolution de {object}'
-    planet-revolutionsName: 'Nombre de révolutions des planètes depuis une date'
-    now: 'Maintenant'
-    averageAgeFirstChildren: "Age moyen des femmes à la naissance du 1er enfant dans l'OCDE"
-    sleep-time: '{
-        nbYears,
-        plural,
-        =1 {1 année passée} other {# années passées}
-    } à dormir'
-    sleep-timeName: 'Durée estimée de sommeil en année depuis une date'
-    planet:
-        mercury: Mercure
-        venus: Venus
-        earth: Terre
-        mars: Mars
-        jupiter: Jupiter
-        saturn: Saturne
-        uranus: Uranus
-        neptune: Neptune
-        pluto: Pluton
-    billionSeconds: '{nbBSeconds, number} {nbBSeconds, selectordinal, one {milliard} other {milliards}} de secondes'
-    billionSecondsName: 'Milliards de secondes depuis une date'
-    daysFromBirthDateName: 'Jours depuis une date'
-    millionMinutesName: 'Million de minutes depuis une date'
+  thousands: '{nbDays} jours'
+  thousandsName: 'Nombre de jours depuis une date'
+  minutes: '{nbMinutes, number} minutes'
+  planet-revolutions: '{count, ordinal} révolution de {object} '
+  planet-revolution: '{count, selectordinal, one {#ère} other {#ème}} révolution de {object}'
+  planet-revolutionsName: 'Nombre de révolutions des planètes depuis une date'
+  now: 'Maintenant'
+  averageAgeFirstChildren: "Age moyen des femmes à la naissance du 1er enfant dans l'OCDE"
+  sleep-time: '{ nbYears, plural, =1 {1 année passée} other {# années passées} } à dormir'
+  sleep-timeName: 'Durée estimée de sommeil en année depuis une date'
+  planet:
+    mercury: Mercure
+    venus: Vénus
+    earth: Terre
+    mars: Mars
+    jupiter: Jupiter
+    saturn: Saturne
+    uranus: Uranus
+    neptune: Neptune
+    pluto: Pluton
+  billionSeconds: '{nbBSeconds, number} {nbBSeconds, selectordinal, one {milliard} other {milliards}} de secondes'
+  billionSecondsName: 'Milliards de secondes depuis une date'
+  daysFromBirthDateName: 'Jours depuis une date'
+  millionMinutesName: 'Million de minutes depuis une date'
 events:
-    title: 'Evenements basés sur une date de naissance le {birthdate, date}'
-    what: 'Quoi'
-    when: 'Quand'
-    daysFromNow: 'Différence en jours'
-    age: 'Âge'
-    age_calc: '{
-        nbYears,
-        plural,
-        =0 {} =1 {1 an} other {# ans}
-    }{
-        nbYears,
-        plural,
-        =0 {{nbMonths, plural, =0 {} other {# mois}}}
-        =1 {{nbMonths, plural, =0 {} other { # mois}}}
-        =2 {{nbMonths, plural, =0 {} other { # mois}}}
-        other {}
-    }'
+  title: 'Evenements basés sur une date de naissance le {birthdate, date}'
+  what: 'Quoi'
+  when: 'Quand'
+  daysFromNow: 'Différence en jours'
+  age: 'Âge'
+  age_calc: '{ nbYears, plural, =0 {} =1 {1 an} other {# ans} }{ nbYears, plural,
+    =0 {{nbMonths, plural, =0 {} other {# mois}}} =1 {{nbMonths, plural, =0 {} other
+    { # mois}}} =2 {{nbMonths, plural, =0 {} other { # mois}}} other {} }'
