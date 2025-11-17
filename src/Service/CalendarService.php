@@ -233,7 +233,7 @@ class CalendarService
 
     private function getAllRendererClasses(): array
     {
-        return array_keys($this->renderers);
+        return array_keys($this->getRenderers());
     }
 
     private function getRecipeRenderingConfig(): array
