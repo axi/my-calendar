@@ -41,7 +41,7 @@ class MillionMinutesRecipe extends AbstractRecipe
 
     public function getSource(): string
     {
-        return '';
+        return 'Simple maths';
     }
 
     public function getName(): TranslatableMessage

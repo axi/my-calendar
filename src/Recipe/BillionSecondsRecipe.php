@@ -36,4 +36,9 @@ class BillionSecondsRecipe extends AbstractRecipe
     {
         return new TranslatableMessage('recipe.billionSecondsName');
     }
+
+    public function getSource(): string
+    {
+        return 'Simple maths';
+    }
 }

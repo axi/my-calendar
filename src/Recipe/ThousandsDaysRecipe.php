@@ -39,7 +39,7 @@ class ThousandsDaysRecipe extends AbstractRecipe
 
     public function getSource(): string
     {
-        return 'simple maths';
+        return 'Simples math';
     }
 
     public function getName(): TranslatableMessage
