@@ -14,9 +14,9 @@ recipe:
     pluto: Plutón
   planet-revolution: '{count, ordinal} {object} revolución'
   billionSeconds: '{nbBSeconds, number} mil millones de segundos'
-  averageAgeFirstChildren: La media de la edad de las mujeres en el primer parto en
-    2022 en la Oficina de Desarrollo de la Primera Infancia
-  sleep-time: '{ nbYears, plural, =1 {1 year} otros {# years} } pasados durmiendo'
+  averageAgeFirstChildren: La media de la edad de las mujeres en el primer parto
+    en 2022 en la Oficina de Desarrollo de la Primera Infancia
+  sleep-time: '{ nbYears, plural, =1 {1 año} other {# años} } pasados durmiendo'
 events:
   what: Qué
   when: Cuando
