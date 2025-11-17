@@ -82,6 +82,11 @@ class CalendarService
         $this->onlyRecipes = $onlyRecipes;
     }
 
+    public function resetOnlyRecipes(): void
+    {
+        $this->onlyRecipes = [];
+    }
+
     /**
      * If not empty, will disable the generation of those recipes
      * @param string[] $exceptRecipes FQDN recipe class names
@@ -89,6 +94,17 @@ class CalendarService
     public function setExceptRecipes(array $exceptRecipes): void
     {
         $this->exceptRecipes = $exceptRecipes;
+    }
+
+    public function resetExceptRecipes(): void
+    {
+        $this->exceptRecipes = [];
+    }
+
+    public function reset(): void
+    {
+        $this->resetOnlyRecipes();
+        $this->resetExceptRecipes();
     }
 
     /**
@@ -298,4 +314,6 @@ class CalendarService
 
         return $return;
     }
+
+
 }
